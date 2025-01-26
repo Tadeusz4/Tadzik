@@ -1,0 +1,66 @@
+{extends file="../templates/main.html"}
+
+{block name=footer}przykładowa tresć stopki{/block}
+
+{block name=content}
+
+<h3>Kantor</h2>
+
+
+	<form class="pure-form pure-form-stacked" action="{$app_url}/app/calc.php" method="post">
+		<fieldset>
+			<label for="kwota">Kwota</label>
+			<input id="kwota" type="text" placeholder="kwota" name="kwota" value="{$form['kwota']}">
+			<label for="op">Operacja</label>
+			
+			<select id="op" name="op">
+				<option value="zplnnaeur" {if isset($form.op) && $form.op == 'zplnnaeur'}selected{/if}>z pln na eur</option>
+				<option value="zeurnapln" {if isset($form.op) && $form.op == 'zeurnapln'}selected{/if}>z eur na pln</option>
+			</select>
+						
+			<label for="kurs">Kurs</label>
+			<input id="kurs" type="text" placeholder="kurs" name="kurs" value="{$form['kurs']}">
+		</fieldset>
+		<button type="submit" class="pure-button pure-button-primary">Oblicz</button>
+	</form>
+
+<div class="messages">
+
+{* wyświeltenie listy błędów, jeśli istnieją *}
+{if isset($messages)}
+	{if count($messages) > 0} 
+		<h4>Wystąpiły błędy: </h4>
+		<ol class="err">
+		{foreach  $messages as $msg}
+		{strip}
+			<li>{$msg}</li>
+		{/strip}
+		{/foreach}
+		</ol>
+	{/if}
+{/if}
+
+{* wyświeltenie listy informacji, jeśli istnieją *}
+{if isset($infos)}
+	{if count($infos) > 0} 
+		<h4>Informacje: </h4>
+		<ol class="inf">
+		{foreach  $infos as $msg}
+		{strip}
+			<li>{$msg}</li>
+		{/strip}
+		{/foreach}
+		</ol>
+	{/if}
+{/if}
+
+{if isset($result)}
+	<h4>Wynik</h4>
+	<p class="res">
+	{$result}
+	</p>
+{/if}
+
+</div>
+
+{/block}
